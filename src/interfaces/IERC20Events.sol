@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v5.1.0) (interfaces/draft-IERC6093.sol)
 pragma solidity ^0.8.20;
@@ -17,5 +16,4 @@ interface IERC20Events {
      * a call to {approve}. `value` is the new allowance.
      */
     event Approval(address indexed owner, address indexed spender, uint256 value);
-
 }

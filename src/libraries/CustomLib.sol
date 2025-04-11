@@ -21,7 +21,7 @@ library CustomLib {
     function power(uint256 _baseN, uint256 _baseD, uint32 _expN, uint32 _expD) internal pure returns (uint256, uint8) {
         require(_baseN < MAX_NUM, "baseN too large");
         require(_baseD < MAX_NUM, "baseD too large");
-        
+
         uint256 baseLog;
         uint256 base = _baseN * FIXED_1 / _baseD;
         if (base < FIXED_1) {
@@ -29,7 +29,7 @@ library CustomLib {
         } else {
             baseLog = _baseLog(FIXED_1, base, MAX_PRECISION);
         }
-        
+
         uint256 baseLogTimesExp = baseLog * _expN / _expD;
         if (base < FIXED_1) {
             return (FIXED_1 * FIXED_1 / _generalExp(baseLogTimesExp, MAX_PRECISION), MAX_PRECISION);
@@ -37,44 +37,44 @@ library CustomLib {
             return (_generalExp(baseLogTimesExp, MAX_PRECISION), MAX_PRECISION);
         }
     }
-    
+
     /**
      * @dev Logarithm function for large numbers
      */
     function _baseLog(uint256 x, uint256 y, uint8 precision) private pure returns (uint256) {
         uint256 res = 0;
-        
+
         // This implementation is simplified for the purpose of this example
         // A full implementation would include the logarithm calculation
         // from the original Bancor formula
-        
+
         // For simplicity, we'll use a less efficient but functional approach
         uint256 xi = x;
         uint256 yi = y;
-        
+
         while (xi < yi) {
             xi = xi * FIXED_1 / FIXED_1;
             res += FIXED_1;
         }
-        
+
         return res * precision / MAX_PRECISION;
     }
-    
+
     /**
      * @dev General exponentiation function
      */
     function _generalExp(uint256 _x, uint8 _precision) private pure returns (uint256) {
         uint256 xi = _x;
         uint256 res = 0;
-        
+
         // This implementation is simplified for the purpose of this example
         // A full implementation would include the exponentiation calculation
         // from the original Bancor formula
-        
+
         // For simplicity, we'll approximate using the e^x Taylor series
         xi = (xi * _precision) / MAX_PRECISION;
         res = FIXED_1 + xi + (xi * xi / 2) + (xi * xi * xi / 6);
-        
+
         return res;
     }
 }

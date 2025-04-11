@@ -30,18 +30,13 @@ contract DiamondDeployer is IDiamondCut, DiamondUtils {
         ownerF = address(new OwnershipFacet());
 
         launchpadFacet = address(new LaunchpadFacet());
-    
+
         // Deploy main diamond
         address usdcTokenAddress = address(0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238);
         address routerAddress = 0xeE567Fe1712Faf6149d80dA1E6934E354124CfE3;
         address deployerAddress = vm.addr(privateKey);
 
-        diamond = address(new Diamond(
-            deployerAddress,
-            dCutFacet,
-            usdcTokenAddress,
-            routerAddress
-        ));
+        diamond = address(new Diamond(deployerAddress, dCutFacet, usdcTokenAddress, routerAddress));
 
         // Create facet cuts
         FacetCut[] memory cut = new FacetCut[](3);
@@ -68,17 +63,10 @@ contract DiamondDeployer is IDiamondCut, DiamondUtils {
         IDiamondCut(diamond).diamondCut(cut, address(0x0), "");
 
         // Verify deployment
-        require(
-            DiamondLoupeFacet(diamond).facetAddresses().length > 0,
-            "Diamond deployment failed"
-        );
+        require(DiamondLoupeFacet(diamond).facetAddresses().length > 0, "Diamond deployment failed");
 
         vm.stopBroadcast();
     }
 
-    function diamondCut(
-        FacetCut[] calldata _diamondCut,
-        address _init,
-        bytes calldata _calldata
-    ) external override {}
+    function diamondCut(FacetCut[] calldata _diamondCut, address _init, bytes calldata _calldata) external override {}
 }

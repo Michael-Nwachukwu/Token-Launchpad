@@ -7,7 +7,6 @@ pragma solidity ^0.8.20;
  * @dev Interface of the ERC-20 standard as defined in the ERC.
  */
 interface IERC20 {
-
     /**
      * @dev Returns the value of tokens in existence.
      */

@@ -8,7 +8,6 @@ import "../interfaces/IERC20Errors.sol";
 import "../interfaces/IERC20Events.sol";
 import "../interfaces/IERC20Metadata.sol";
 
-
 /**
  * @dev Implementation of the {IERC20} interface.
  *

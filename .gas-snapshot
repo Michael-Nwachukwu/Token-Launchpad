@@ -1,0 +1,6 @@
+DiamondDeployer:testDeployDiamond() (gas: 2278177)
+LaunchpadFacetTest:testBuyInToLaunchpadCampaign() (gas: 837742)
+LaunchpadFacetTest:testCreateCampaign() (gas: 692167)
+LaunchpadFacetTest:testDiamondDeployment() (gas: 28386)
+LaunchpadFacetTest:testPayOutCampaign() (gas: 992889)
+LaunchpadFacetTest:testTokenInitialization() (gas: 15518)

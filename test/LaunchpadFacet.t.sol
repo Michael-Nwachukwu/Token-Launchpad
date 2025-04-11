@@ -51,12 +51,7 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
 
         // Deploy Diamond with actual token addresses
         dCutFacet = new DiamondCutFacet();
-        diamond = new Diamond(
-            address(this),
-            address(dCutFacet),
-            address(usdc),
-            address(ROUTER_ADDRESS)
-        );
+        diamond = new Diamond(address(this), address(dCutFacet), address(usdc), address(ROUTER_ADDRESS));
 
         dLoupe = new DiamondLoupeFacet();
         ownerF = new OwnershipFacet();
@@ -94,18 +89,14 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
     //  ------------------------------------------- CAMPAIGN FUNCTIONS TESTS ------------------------------------
 
     function testDiamondDeployment() public {
-        address[] memory facets = DiamondLoupeFacet(address(diamond))
-            .facetAddresses();
+        address[] memory facets = DiamondLoupeFacet(address(diamond)).facetAddresses();
         assertEq(facets.length, 5);
     }
 
     function testTokenInitialization() public {
         assertEq(TokenFacet(address(usdc)).name(), "USDC Token");
-    
-        assertEq(
-            TokenFacet(address(usdc)).balanceOf(address(this)),
-            1000000e18
-        );
+
+        assertEq(TokenFacet(address(usdc)).balanceOf(address(this)), 1000000e18);
     }
 
     function testCreateCampaign() public {
@@ -118,19 +109,11 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
 
         // Deposit to pool from user1
         vm.prank(user1);
-        assertEq(
-            TokenFacet(address(usdc)).balanceOf(user1),
-            1000e18
-        );
+        assertEq(TokenFacet(address(usdc)).balanceOf(user1), 1000e18);
 
         // Create a campaign
         vm.prank(user1);
-        LaunchpadFacet(payable(address(diamond))).createCampaign(
-            "VALHALLA",
-            "VLH",
-            5000e6,
-            10000
-        );
+        LaunchpadFacet(payable(address(diamond))).createCampaign("VALHALLA", "VLH", 5000e6, 10000);
 
         // Get campaign details
         (
@@ -175,19 +158,14 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
 
         // Create a campaign
         vm.prank(user1);
-        LaunchpadFacet(payable(address(diamond))).createCampaign(
-            "VALHALLA",
-            "VLH",
-            5000e6,
-            10000
-        );
+        LaunchpadFacet(payable(address(diamond))).createCampaign("VALHALLA", "VLH", 5000e6, 10000);
 
         // Calculate tokens to mint (before buyIn)
         uint256 tokensToMint = LaunchpadFacet(payable(address(diamond))).getTokensToMint(
-            500_000_000 * 10**18, // TOKENS_FOR_SALE
-            0,                    // Initial reserveBalance
-            10000,                // reserveRatio
-            100e6                 // Match buyIn
+            500_000_000 * 10 ** 18, // TOKENS_FOR_SALE
+            0, // Initial reserveBalance
+            10000, // reserveRatio
+            100e6 // Match buyIn
         );
 
         // Buy in to the campaign
@@ -195,19 +173,11 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
         LaunchpadFacet(payable(address(diamond))).buyIn(1, 100e6);
 
         // Get campaign details
-        (
-            ,
-            ,
-            uint256 amountRaised,
-            uint256 tokensSold,
-            address tokenAddress,
-            ,
-            ,
-            ,
-        ) = LaunchpadFacet(payable(address(diamond))).getCampaignDetails(1);
+        (,, uint256 amountRaised, uint256 tokensSold, address tokenAddress,,,,) =
+            LaunchpadFacet(payable(address(diamond))).getCampaignDetails(1);
 
         // Assertions
-        assertEq(amountRaised, 100e6);      // 100 USDC
+        assertEq(amountRaised, 100e6); // 100 USDC
         assertEq(tokensSold, tokensToMint); // Should be 100e18
         assertEq(TokenFacet(address(tokenAddress)).balanceOf(user2), tokensToMint);
     }
@@ -225,12 +195,7 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
 
         // Create a campaign
         vm.prank(user1);
-        LaunchpadFacet(payable(address(diamond))).createCampaign(
-            "VALHALLA",
-            "VLH",
-            5000e6,
-            10000
-        );
+        LaunchpadFacet(payable(address(diamond))).createCampaign("VALHALLA", "VLH", 5000e6, 10000);
 
         // Buy in to the campaign
         vm.prank(user2);
@@ -250,22 +215,13 @@ contract LaunchpadFacetTest is Test, IDiamondCut, DiamondUtils {
 
         // Assertions
         assertEq(amountRaised, 5000e6);
-        assertEq(tokensSold, 500_000_000 * 10**18);
+        assertEq(tokensSold, 500_000_000 * 10 ** 18);
         assertEq(isActive, false);
         assertEq(isFundingComplete, true);
-        assertEq(TokenFacet(address(tokenAddress)).balanceOf(creator), 200_000_000 * 10**18);
+        assertEq(TokenFacet(address(tokenAddress)).balanceOf(creator), 200_000_000 * 10 ** 18);
         assertEq(TokenFacet(address(usdc)).balanceOf(creator), targetAmount / 2);
-        assertEq(TokenFacet(address(tokenAddress)).balanceOf(address(diamond)), 50_000_000 * 10**18);
-
-
+        assertEq(TokenFacet(address(tokenAddress)).balanceOf(address(diamond)), 50_000_000 * 10 ** 18);
     }
 
-    
-
-
-    function diamondCut(
-        FacetCut[] calldata _diamondCut,
-        address _init,
-        bytes calldata _calldata
-    ) external override {}
+    function diamondCut(FacetCut[] calldata _diamondCut, address _init, bytes calldata _calldata) external override {}
 }
