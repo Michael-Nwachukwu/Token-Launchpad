@@ -85,6 +85,7 @@ contract LaunchpadFacet is ReentrancyGuard, Power {
         if (_usdcAmount == 0) revert LibEventsAndErrors.ZeroValueNotAllowed();
         if (!campaign.isActive) revert LibEventsAndErrors.CampaignInactive();
         if (campaign.isFundingComplete) revert LibEventsAndErrors.FundingAlreadyCompleted();
+
         if (diamond.usdcToken.balanceOf(msg.sender) < _usdcAmount) revert LibEventsAndErrors.InsufficientFunds();
 
         // Calculate tokens based on Bancor's bonding curve
@@ -145,7 +146,7 @@ contract LaunchpadFacet is ReentrancyGuard, Power {
             return 0;
         }
 
-        // ------------------------------------------------------------------------ Prod
+        // ------------------------------------------------------------------------ Production
 
         // If reserve balance is 0 = first buy
         // if (_reserveBalance == 0) {
@@ -153,15 +154,14 @@ contract LaunchpadFacet is ReentrancyGuard, Power {
         //     return _depositAmount * 10**12;
         // }
 
-        // ------------------------------------------------------------------------ Prod
-
-        // ------------------------------------------------------------------------ only for testing purposes
+        // ------------------------------------------------------------------------ Production
 
         // ------------------------------------------------------------------------ only for testing purposes
 
         if (_reserveBalance == 0) {
             return _depositAmount.mul(10 ** 17); // 5000e6 USDC = 500_000_000 * 10**18 tokens
         }
+        
         // ------------------------------------------------------------------------ only for testing purposes
 
         // Special case if the ratio = 100%

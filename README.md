@@ -1,6 +1,6 @@
-# Diamond Launchpad
+# Fundraising token launchpad
 
-**Diamond Launchpad** is a decentralized fundraising platform built on Ethereum, designed to allow users to create token-based fundraising campaigns with a focus on equitable token distribution using Bancor’s bonding curve. The platform leverages the EIP-2535 Diamond Standard for upgradability and integrates with Uniswap V2 for liquidity provision post-funding.
+For a Fundraising token launchpad, designed to allow users to create token-based fundraising campaigns with a focus on equitable token distribution using Bancor’s bonding curve. The platform leverages the EIP-2535 Diamond Standard for upgradability and integrates with Uniswap V2 for liquidity provision post-funding.
 
 ## Project Goals
 
@@ -25,13 +25,11 @@ The primary goal of Diamond Launchpad is to create a fundraising token launchpad
     -   Used `DiamondUtils.sol` to generate function selectors for facet registration.
 2.  **Token and USDC Integration:**
     -   Integrated a custom `TokenFacet` (ERC20 implementation) for USDC and campaign tokens, with adjustable decimals (6 for USDC, 18 for tokens).
-    -   Hardcoded Sepolia USDC (`0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238`) for deployment.
 3.  **Bancor’s Bonding Curve:**
-    -   Implemented in `LaunchpadFacet` via `_calculatePurchaseReturn`.
-    -   Adjusted to scale initial purchases to meet the 500 million token target with desired USDC funding.
+    -   Implemented in `LaunchpadFacet` via `_calculatePurchaseReturn()`.
 4.  **Fundraising Logic:**
-    -   Added `createCampaign` and `buyIn` functions in `LaunchpadFacet`.
     -   Defined constants: `TOKENS_FOR_SALE` (500M), `CREATOR_ALLOCATION` (200M), `LIQUIDITY_ALLOCATION` (250M), `PLATFORM_FEE_TOKENS` (50M).
+    -   Added `createCampaign` and `buyIn` functions in `LaunchpadFacet`.
 5.  **Payout and Liquidity:**
     -   Implemented `_payOut` to distribute tokens and USDC, calling `_addLiquidity` for Uniswap integration.
     -   Used a mock Uniswap V2 Router for local testing, with plans for real deployment on Sepolia.
@@ -56,7 +54,7 @@ Bancor’s bonding curve is a mathematical formula used to price tokens dynamica
 
 For the initial purchase (`Reserve Balance = 0`), a special case applies to set a starting price.
 
-#### How
+#### How?
 
 -   **Implementation:** In `_calculatePurchaseReturn`:
 
