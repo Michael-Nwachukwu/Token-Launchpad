@@ -149,19 +149,19 @@ contract LaunchpadFacet is ReentrancyGuard, Power {
         // ------------------------------------------------------------------------ Production
 
         // If reserve balance is 0 = first buy
-        // if (_reserveBalance == 0) {
-        //     // For the very first purchase, use linear pricing
-        //     return _depositAmount * 10**12;
-        // }
+        if (_reserveBalance == 0) {
+            // For the very first purchase, use linear pricing
+            return _depositAmount * 10**12;
+        }
 
         // ------------------------------------------------------------------------ Production
 
         // ------------------------------------------------------------------------ only for testing purposes
 
-        if (_reserveBalance == 0) {
-            return _depositAmount.mul(10 ** 17); // 5000e6 USDC = 500_000_000 * 10**18 tokens
-        }
-        
+        // if (_reserveBalance == 0) {
+        //     return _depositAmount.mul(10 ** 17); // 5000e6 USDC = 500_000_000 * 10**18 tokens
+        // }
+
         // ------------------------------------------------------------------------ only for testing purposes
 
         // Special case if the ratio = 100%
