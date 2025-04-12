@@ -2,6 +2,18 @@
 
 For a Fundraising token launchpad, designed to allow users to create token-based fundraising campaigns with a focus on equitable token distribution using Bancor’s bonding curve. The platform leverages the EIP-2535 Diamond Standard for upgradability and integrates with Uniswap V2 for liquidity provision post-funding.
 
+Watch me go through my implementation! 
+https://www.loom.com/share/b707d8bb890945b5953145e0be3ba92d?sid=e2500a7a-2c9e-4164-8348-f9f5a4ccaf32
+
+## Deployment Details
+
+The contract is deployed on the Lisk Layer 2 blockchain. 
+
+Deployed & Verified contract addresses
+
+- Diamond Proxy Contract = https://sepolia-blockscout.lisk.com/address/0xf26df4aa087a24ae0dae5066d28ac65ed429c8b4?tab=index
+- LaunchpadFacet contract (holds the main logic) = https://sepolia-blockscout.lisk.com/address/0x3a2ad03e2018136fd869e0b97f8436b1d62761d7?tab=index
+
 ## Project Goals
 
 The primary goal of Diamond Launchpad is to create a fundraising token launchpad where users can raise funds in USDC, with the following specifications:
@@ -36,6 +48,8 @@ The primary goal of Diamond Launchpad is to create a fundraising token launchpad
 6.  **Testing:**
     -   Wrote comprehensive tests in `LaunchpadFacetTest.sol` using Foundry’s `forge-std`.
     -   Simulated campaign creation, funding, and payout scenarios.
+<img width="1440" alt="Screenshot 2025-04-12 at 9 56 59 AM" src="https://github.com/user-attachments/assets/f52ef56a-5796-4bc7-a5a2-46dfbd7696c4" />
+
 7.  **Deployment:**
     -   Created `DiamondDeployer.sol` script for deploying the Diamond and facets on Sepolia.
 
